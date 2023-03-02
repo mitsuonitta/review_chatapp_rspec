@@ -1,8 +1,11 @@
 FactoryBot.define do
-  factory :user do
-    name {Faker::Name.last_name}
-    email {Faker::Internet.free_email}
-    password {Faker::Internet.password(min_length: 6)}
-    password_confirmation {password}
+  factory :message do
+    content {Faker::Lorem.sentence}
+    association :user
+    association :room
+
+    after(:build) do |message|
+      message.image.attach(io: File.open('public/images/test_image.png'), filename: 'test_image.png')
+    end
   end
 end
